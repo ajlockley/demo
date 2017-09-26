@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+   <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+   <script src="components/loader.js"></script>
+   <script src="lib/onsenui/js/onsenui.min.js"></script>
+   <script>
+      var map;
+
+      function initMap() {
+         var auckland = {
+            lat: -36.8485,
+            lng: 174.7633
+         };
+         map = new google.maps.Map(document.getElementById("map_canvas"), {
+            zoom: 10,
+            center: auckland
+         });
+         console.log("Hi, can you see this?");
+      };
+      
+      function getBanks() {
+         var banks = fetch(new Request('https://maps.googleapis.com/maps/api/place/textsearch/json?query=banks+in+Auckland&key=AIzaSyCJ2qRMp36SHOUYXgpZ_H7vPktZkiWCUJI', {
+            mode:'no-cors',
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         }))
+            .then(function (response, test) {
+               return response.json();
+            })
+            .then(function(banks) {
+               console.log(banks);
+            });
+         
+      }
+   </script>
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ2qRMp36SHOUYXgpZ_H7vPktZkiWCUJI">
+   </script>
+   <script src="lib/onsenui/js/onsenui.min.js"></script>
+   <script>
+      google.maps.event.addDomListener(window, "load", initMap);
+   </script>
+
+   <link rel="stylesheet" href="components/loader.css">
+   <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+   <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+   <link rel="stylesheet" href="css/style.css">
+
+   <script>
+      ons.ready(function () {
+         console.log("Onsen UI is ready!");
+      });
+
+      window.fn = {};
+      window.fn.open = function () {
+         var menu = document.getElementById('menu');
+         menu.open();
+      };
+      window.fn.load = function (page) {
+         var content = document.getElementById('content');
+         var menu = document.getElementById('menu');
+         content
+            .load(page)
+            .then(menu.close.bind(menu));
+      };
+   </script>
+
+</head>
+
+<body>
+   <ons-splitter>
+      <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+         <ons-page>
+            <ons-list>
+               <ons-list-item onclick="fn.load('home.html'); location.reload();" tappable>
+                  Home
+               </ons-list-item>
+               <ons-list-item onclick="fn.load('banks.html'); getBanks();" tappable>
+                  Banks
+               </ons-list-item>
+               <ons-list-item onclick="fn.load('about.html')" tappable>
+                  About
+               </ons-list-item>
+            </ons-list>
+         </ons-page>
+      </ons-splitter-side>
+      <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+   </ons-splitter>
+
+   <ons-template id="home.html">
+      <ons-page>
+
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Main
+
+            </div>
+         </ons-toolbar>
+         <div id="map_canvas"></div>
+      </ons-page>
+   </ons-template>
+
+   <ons-template id="banks.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Banks
+
+            </div>
+         </ons-toolbar>
+         <ons-list>
+            <a href="https://maps.google.com/?q=ANZ" target="_blank"><ons-list-item>ANZ</ons-list-item></a>
+            <a href="https://maps.google.com/?q=ASB" target="_blank"><ons-list-item>ASB</ons-list-item></a>
+            <a href="https://maps.google.com/?q=TSB" target="_blank"><ons-list-item>TSB</ons-list-item></a>
+            <a href="https://maps.google.com/?q=Bank+Of+Baroda" target="_blank"><ons-list-item>Bank Of Baroda</ons-list-item></a>
+            <a href="https://maps.google.com/?q=Koomin+Bank" target="_blank"><ons-list-item>Koomin Bank</ons-list-item></a>
+            <a href="https://maps.google.com/?q=Bank+Of+India" target="_blank"><ons-list-item>Bank of India</ons-list-item></a>
+         </ons-list>
+   
+         
+            
+      </ons-page>
+   </ons-template>
+
+   <ons-template id="about.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               About
+            </div>
+         </ons-toolbar>
+
+         <div class="about">
+            <h1>What is this?</h1>
+            <p>This app is to help people when they come to New Zealand and they don't know much. It will have information about:
+            </p>
+            <ul>
+               <li>schools</li>
+               <li>banks</li>
+               <li>supermarkets</li>
+               <li>car dealers</li>
+            </ul>
+         </div>
+
+      </ons-page>
+   </ons-template>
+</body>
+
+</html>

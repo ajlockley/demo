@@ -1,0 +1,29 @@
+/**/
+#map {
+    text-align: center;
+}
+
+.map {
+    width: 100%;
+    max-width: 500px;
+}
+
+#map_canvas {
+    height: 500px;
+    background-color: #B0FFFF;
+}
+
+.page__background {
+    
+    background-color: #B0FFFF;
+}
+
+.about {
+    
+    padding: 15px;
+}
+
+.page__content h1 {
+    
+    font-size: 40px;
+}
