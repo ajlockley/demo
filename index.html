@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+   <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+   <script src="components/loader.js"></script>
+   <script src="lib/onsenui/js/onsenui.min.js"></script>
+   <script>
+      var map;
+
+      function initMap() {
+         var auckland = {
+            lat: -36.8485,
+            lng: 174.7633
+         };
+         map = new google.maps.Map(document.getElementById("map_canvas"), {
+            zoom: 10,
+            center: auckland
+         });
+         console.log("Hi, can you see this?");
+      };
+      
+      function getBanks() {
+         var banks = fetch(new Request('https://maps.googleapis.com/maps/api/place/textsearch/json?query=banks+in+Auckland&key=AIzaSyCJ2qRMp36SHOUYXgpZ_H7vPktZkiWCUJI', {
+            mode:'no-cors',
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         }))
+            .then(function (response, test) {
+               return response.json();
+            })
+            .then(function(banks) {
+               console.log(banks);
+            });
+         
+      }
+   </script>
+   
+   
+   
+   
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ2qRMp36SHOUYXgpZ_H7vPktZkiWCUJI">
+   </script>
+   <script src="lib/onsenui/js/onsenui.min.js"></script>
+   <script>
+      google.maps.event.addDomListener(window, "load", initMap);
+   </script>
+
+   <link rel="stylesheet" href="components/loader.css">
+   <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+   <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+   <link rel="stylesheet" href="css/style.css">
+
+   <script>
+      ons.ready(function () {
+         console.log("Onsen UI is ready!");
+      });
+
+      window.fn = {};
+      window.fn.open = function () {
+         var menu = document.getElementById('menu');
+         menu.open();
+      };
+      window.fn.load = function (page) {
+         var content = document.getElementById('content');
+         var menu = document.getElementById('menu');
+         content
+            .load(page)
+            .then(menu.close.bind(menu));
+      };
+   </script>
+
+</head>
+
+<body>
+   <ons-splitter>
+      <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+         <ons-page>
+            <ons-list>
+               <ons-list-item onclick="fn.load('home.html'); location.reload();" tappable>
+                  Home
+               </ons-list-item>
+               
+               <ons-list-item onclick="fn.load('about.html'); getBanks();" tappable>
+                  About
+               </ons-list-item>
+               
+               <ons-list-item onclick="fn.load('banks.html')" tappable>
+                  Banks
+               </ons-list-item>
+               
+               <ons-list-item onclick="fn.load('supermarkets.html')" tappable>
+                  Supermarkets
+               </ons-list-item>
+               
+               <ons-list-item onclick="fn.load('gas-station.html')" tappable>
+                  Gas Stations
+               </ons-list-item>
+               
+               <ons-list-item onclick="fn.load('car-dealers.html')" tappable>
+                  Car Dealers
+               </ons-list-item>
+               
+            </ons-list>
+         </ons-page>
+      </ons-splitter-side>
+<ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+   </ons-splitter>
+
+   <ons-template id="home.html">
+      <ons-page>
+
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Main
+            </div>
+         </ons-toolbar>
+         <div id="map_canvas">
+         
+         </div>
+      </ons-page>
+   </ons-template>
+   
+
+   <ons-template id="about.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               About
+            </div>
+         </ons-toolbar>
+
+         <div class="about">
+            <h1>What is this?</h1>
+            <p>When you move to a new country there are a million questions to answer, and sometimes you won’t even know who to ask and where to ask.
+
+            This website has information for new migrants to help them settle into Auckland, New Zealand. I am in the middle of adding a whole lot more information to help you get around safe and happy in Auckland.
+               
+            This website is to help people when they come to New Zealand and they don't know much. It will have information about:
+            </p>
+            <ul>
+               <li>banks</li>
+               <li>supermarkets</li>
+               <li>gas-stations</li>
+               <li>car dealers</li>
+            </ul>
+            
+            
+         </div>
+
+      </ons-page>
+   </ons-template>
+   
+   
+   <ons-template id="banks.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Banks
+
+            </div>
+         </ons-toolbar>
+         
+      
+            <a href="https://maps.google.com/?q=ANZ" target="_blank"><ons-list-item>ANZ</ons-list-item></a>
+         
+            <a href="https://maps.google.com/?q=ASB" target="_blank"><ons-list-item>ASB</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=TSB" target="_blank"><ons-list-item>TSB</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=BNZ" target="_blank"><ons-list-item>BNZ</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=NZCU" target="_blank"><ons-list-item>NZCU</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Kiwibank" target="_blank"><ons-list-item>Kiwibank</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Westpac" target="_blank"><ons-list-item>Westpac</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Carbine+Credit+Union" target="_blank"><ons-list-item>Carbine Credit Union</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Heartland+Bank+Limited" target="_blank"><ons-list-item>Heartland bank Limited</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Harmony" target="_blank"><ons-list-item>Harmony</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=The+Co-operative+Bank" target="_blank"><ons-list-item>The Co-operative Bank</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Bank+Of+Baroda" target="_blank"><ons-list-item>Bank Of Baroda</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Koomin+Bank" target="_blank"><ons-list-item>Koomin Bank</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=Bank+Of+India" target="_blank"><ons-list-item>Bank of India</ons-list-item></a>
+            
+            <a href="https://maps.google.com/?q=China+Construction+Bank" target="_blank"><ons-list-item>China Construction Bank</ons-list-item></a>
+         
+            
+      </ons-page>
+   </ons-template>
+   
+   <ons-template id="supermarkets.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Supermarkets
+
+            </div>
+         </ons-toolbar>
+         
+      
+            <a href="https://maps.google.com/?q=CountDown" target="_blank"><ons-list-item>CountDown</ons-list-item></a>
+         
+            <a href="https://maps.google.com/?q=New+World" target="_blank"><ons-list-item>New World</ons-list-item></a>
+         
+            <a href="https://maps.google.com/?q=PAK'nSAVE" target="_blank"><ons-list-item>PAK'nSAVE</ons-list-item></a>
+         
+            
+      </ons-page>
+   </ons-template>
+   
+   <ons-template id="gas-station.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Gas Stations
+            </div>
+         </ons-toolbar>
+
+            <a href="https://maps.google.com/?q=BP" target="_blank"><ons-list-item>BP</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Z" target="_blank"><ons-list-item>Z</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=GAS" target="_blank"><ons-list-item>GAS</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Mobil" target="_blank"><ons-list-item>Mobil</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Caltex" target="_blank"><ons-list-item>Caltex</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Gull" target="_blank"><ons-list-item>Gull</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Waitomo" target="_blank"><ons-list-item>Waitomo</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=BP" target="_blank"><ons-list-item>BP</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Shell" target="_blank"><ons-list-item>Shell</ons-list-item></a>
+         
+      </ons-page>
+   </ons-template>
+   
+   
+      <ons-template id="car-dealers.html">
+      <ons-page>
+         <ons-toolbar>
+            <div class="left">
+               <ons-toolbar-button onclick="fn.open()">
+                  <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+               </ons-toolbar-button>
+            </div>
+            <div class="center">
+               Car Dealers
+            </div>
+         </ons-toolbar>
+
+            <a href="https://maps.google.com/?q=Honda" target="_blank"><ons-list-item>Honda</ons-list-item></a>
+         
+         
+         <a href="https://maps.google.com/?q=Toyota" target="_blank"><ons-list-item>Toyota</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=BMW" target="_blank"><ons-list-item>BMW</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Hyundai" target="_blank"><ons-list-item>Hyundai</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Volkswagen" target="_blank"><ons-list-item>Volkswagen</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Mercedes-Benz" target="_blank"><ons-list-item>Mercedes-Benz</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Mitsubishi" target="_blank"><ons-list-item>Mitsubishi</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Suzuki" target="_blank"><ons-list-item>Suzuki</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Giltrap" target="_blank"><ons-list-item>Giltrap</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Ford" target="_blank"><ons-list-item>Ford</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Mazda" target="_blank"><ons-list-item>Mazda</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Nissan" target="_blank"><ons-list-item>Nissan</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Renault" target="_blank"><ons-list-item>Renault</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Audi" target="_blank"><ons-list-item>Audi</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Lexus" target="_blank"><ons-list-item>Lexus</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Peugeot" target="_blank"><ons-list-item>Peugeot</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Citreon" target="_blank"><ons-list-item>Citreon</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Bentley" target="_blank"><ons-list-item>Bentley</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Skoda" target="_blank"><ons-list-item>Skoda</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Ferrari" target="_blank"><ons-list-item>Ferrari</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Jeep" target="_blank"><ons-list-item>Jeep</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Land+Rover" target="_blank"><ons-list-item>Land Rover</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Dodge" target="_blank"><ons-list-item>Dodge</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Subaru" target="_blank"><ons-list-item>Subaru</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Porsche" target="_blank"><ons-list-item>Porsche</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Kia+Motors" target="_blank"><ons-list-item>Kia Motors</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Infiniti" target="_blank"><ons-list-item>Infiniti</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=EZ+Motors" target="_blank"><ons-list-item>EZ Motors</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=2+Cheap+Cars" target="_blank"><ons-list-item>2 Cheap Cars</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=City+Motor+Group" target="_blank"><ons-list-item>City Motor Group</ons-list-item></a>
+         
+         <a href="https://maps.google.com/?q=Turners+Cars" target="_blank"><ons-list-item>Turners Cars</ons-list-item></a>
+         
+   
+         
+      </ons-page>
+   </ons-template>
+   
+   
+</body>
+
+</html>
